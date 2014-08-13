@@ -42,6 +42,7 @@ class CSV::Table
 	end
 
 	def get_values(key)
+
 	 	val = [];
 		self.each do |person|
 			val.push(person[key])
@@ -65,7 +66,12 @@ class CSV::Table
 	def print_stat(key)
 		divider()
 		val = self.get_count(key)
-		total = val.values.sum
+		if val.size <= 0
+			puts "Column does not exist: " + key
+			return
+		end
+
+		total = val.values.compact.sum
 
 		puts key
 		val.each do |k,v|
@@ -77,6 +83,12 @@ class CSV::Table
 
 	def print_range(key)
 		vals = get_values(key).compact
+
+		if vals.size <= 0
+			puts "Column does not exist: " + key
+			return
+		end
+
 		format = "%10d to %d" 
 
 		puts key 
