@@ -37,7 +37,8 @@ total_pages = 9999
 response = nil
 data = nil
 
-while page < total_pages do 
+while page <= total_pages do 
+	puts 'Loading page %d' % page 
 	response = do_get(url, token, page)
 
 	response_json = JSON.parse(response.body)
@@ -46,8 +47,7 @@ while page < total_pages do
 	if page == 1
 		data = response_json
 	else
-		puts data['attendees'].size
-		data['attendees'] << response_json['attendees']
+		data['attendees'].concat(response_json['attendees'])
 	end
 
 	page = page + 1
