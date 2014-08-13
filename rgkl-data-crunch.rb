@@ -108,14 +108,21 @@ end
 
 def print_programmed_in_tech(table)
 	count = 0
+	not_tech = []
 	table.select_secondary($programmed, 'Yes', 'Job Title').each do |job|
 		tokens = job.downcase.split(' ')
 		overlap = tokens & $job_tech_keywords
 		if overlap.size > 0
 			count = count + 1
+		else 
+			not_tech.push(job)
+
 		end
+
 	end
 	puts "Out of those who have programmed %2.2f%% are in tech " % (count*100.0 / table.get_rows_with($programmed, 'Yes').size)
+
+	puts "Jobs of those not in tech " + not_tech.to_s
 	divider()
 end
 
