@@ -6,5 +6,5 @@ if not oauth
 end
 
 `ruby eventbrite.rb #{oauth} #{infile} >&2`
-`ruby json-to-csv.rb #{infile} #{outfile}`
+`ruby json-to-csv.rb #{infile} #{outfile} >&2`
 `ruby rgkl-data-crunch.rb #{outfile} >&2`

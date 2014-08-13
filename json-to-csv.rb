@@ -31,11 +31,16 @@ attendees.first['answers'].each do |a|
 end
 
 csv = CSV.open(outfile, 'wb') do |csv|
-	csv << (profile_headers + answer_headers)
+	csv << (['created'] + profile_headers + answer_headers)
 	attendees.each do |a|
 		# Profile
 		p = a['profile']
 		val = []
+
+		# Date registered
+		date = a['created']
+		val.push date
+
 		profile_headers.each do |k|
 			val.push p[k]
 		end

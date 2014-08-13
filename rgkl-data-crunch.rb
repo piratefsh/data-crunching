@@ -8,6 +8,7 @@ table = CSV.read(file_name, {:headers => true});
 
 $job_tech_keywords = %w(developer engineer it software programmer)
 $keys = {
+	:created => 'created',
 	:job_title => 'job_title',
 	:age => 'age',
 	:gender => 'gender',
@@ -123,14 +124,29 @@ def print_programmed_in_tech(table)
 		end
 
 	end
-	puts "Out of those who have programmed %2.2f%% are in tech " % (count*100.0 / table.get_rows_with($programmed, 'Yes').size)
+	puts "Out of those who have programmed %2.2f%% are in tech " % (count*100.0 / table.get_rows_with($keys[:programmed], 'Yes').size)
 	puts "This means %2.2f%% of total %d applicants are in tech" % [count*100.0/table.size, table.size]
 	puts "\nJobs of those not in tech " + not_tech.to_s
 	divider()
 end
 
+
+def print_dates(table)
+	date_range_format =  "From %s to %s"
+	dates = table.get_values($keys[:created]).sort
+
+	start_date = Date.parse(dates.first)
+	end_date = Date.parse(dates.last)
+
+	date_format = '%d/%m/%Y'
+	puts date_range_format % [start_date.strftime(date_format), end_date.strftime(date_format)]
+end
+
 divider()
 puts "Total %d Sign Ups" % table.length
+
+print_dates(table)
+
 table.print_stat($keys[:gender])
 table.print_range($keys[:age])
 
