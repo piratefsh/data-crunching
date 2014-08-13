@@ -3,12 +3,12 @@ require 'json'
 require 'csv'
 
 token = ARGV[0]
+outfile = ARGV[1]
 
-if not token
-	puts 'Usage: ruby eventbrite.rb <oauth token>'
+if not token or not outfile
+	puts 'Usage: ruby eventbrite.rb <oauth token> <outfile>'
 	abort
 end
-
 
 root_uri 	= "http://eventbriteapi.com/v3"
 orders_uri 	= root_uri + "/orders/"
@@ -27,6 +27,6 @@ response = RestClient.get(url.to_s, {:accept => 'json'});
 
 response_json = JSON.parse(response.body)
 
-f = File.new('response.json', 'w')
+f = File.new(outfile, 'w')
 f.puts(response.body)
 f.close

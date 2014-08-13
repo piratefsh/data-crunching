@@ -2,7 +2,22 @@
 require 'json'
 require 'csv'
 
-f 			= File.open('response.json', 'rb')
+infile = ARGV[0]
+outfile = ARGV[1]
+
+if not infile or not outfile
+	puts 'usage: ruby json-to-csv.rb <infile> <outfile>'
+	abort
+end
+
+
+f 			= File.open(infile, 'rb')
+
+if not f 
+	puts 'Cannot open file: ' + infile
+	abort
+end
+
 json 		= JSON.parse(f.read)
 f.close 
 
@@ -15,7 +30,7 @@ attendees.first['answers'].each do |a|
 	answer_headers.push a['question']
 end
 
-csv = CSV.open("attendees.csv", 'wb') do |csv|
+csv = CSV.open(outfile, 'wb') do |csv|
 	csv << (profile_headers + answer_headers)
 	attendees.each do |a|
 		# Profile
@@ -34,7 +49,4 @@ csv = CSV.open("attendees.csv", 'wb') do |csv|
 		csv << val
 	end
 	
-end
-attendees.each do |a| 
-
 end
