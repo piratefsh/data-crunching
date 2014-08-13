@@ -5,8 +5,6 @@ file_name = ARGV[0];
 table = CSV.read(file_name, {:headers => true});
 
 # Keys
-$programmed = "Have you programmed before?"
-$programmed_languages = "Which programming languages are you familiar with?"
 
 $job_tech_keywords = %w(developer engineer it software programmer)
 $keys = {
@@ -114,7 +112,7 @@ end
 def print_programmed_in_tech(table)
 	count = 0
 	not_tech = []
-	table.select_secondary($programmed, 'Yes', $keys[:job_title]).each do |job|
+	table.select_secondary($keys[:programmed], 'Yes', $keys[:job_title]).each do |job|
 		tokens = job.downcase.split(' ')
 		overlap = tokens & $job_tech_keywords
 		if overlap.size > 0
@@ -136,7 +134,7 @@ puts "Total %d Sign Ups" % table.length
 table.print_stat($keys[:gender])
 table.print_range($keys[:age])
 
-table.print_stat($programmed)
+table.print_stat($keys[:programmed])
 print_programmed_in_tech(table)
 
 
