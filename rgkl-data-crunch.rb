@@ -127,7 +127,7 @@ def print_programmed_in_tech(table)
 	end
 	puts "Out of those who have programmed %2.2f%% are in tech " % (count*100.0 / table.get_rows_with($keys[:programmed], 'Yes').size)
 	puts "This means %2.2f%% of total %d applicants are in tech" % [count*100.0/table.size, table.size]
-	puts "\nJobs of those not in tech " + not_tech.to_s
+	# puts "\nJobs of those not in tech " + not_tech.to_s
 	divider()
 end
 

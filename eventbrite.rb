@@ -5,6 +5,8 @@ require 'csv'
 token = ARGV[0]
 outfile = ARGV[1]
 
+page = 1
+
 if not token or not outfile
 	puts 'Usage: ruby eventbrite.rb <oauth token> <outfile>'
 	abort
@@ -16,17 +18,41 @@ event_uri 	= root_uri + "/events/"
 attendee_uri = root_uri + "/events/%s/attendees/%s/" 
 attendees_uri = root_uri + "/events/%s/attendees"
 
-oauth_token = '?token=' + ARGV[0]
 event_id 	= "12457844749"
 
-url = URI.parse((attendees_uri + oauth_token) % event_id)
+url = URI.parse((attendees_uri) % event_id)
 
 puts "GET " + url.path
 
-response = RestClient.get(url.to_s, {:accept => 'json'});
+def do_get(url, token, page)
+	response = RestClient.get(url.to_s, {:accept => 'json', :params => {
+	:token => token,
+	:page => page,
+	}});
+	response
+end
 
-response_json = JSON.parse(response.body)
+
+total_pages = 9999
+response = nil
+data = nil
+
+while page < total_pages do 
+	response = do_get(url, token, page)
+
+	response_json = JSON.parse(response.body)
+	total_pages = response_json['pagination']['page_count']
+
+	if page == 1
+		data = response_json
+	else
+		puts data['attendees'].size
+		data['attendees'] << response_json['attendees']
+	end
+
+	page = page + 1
+end
 
 f = File.new(outfile, 'w')
-f.puts(response.body)
+f.puts(data.to_json)
 f.close
