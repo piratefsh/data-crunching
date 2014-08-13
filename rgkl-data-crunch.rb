@@ -7,6 +7,7 @@ table = CSV.read(file_name, {:headers => true});
 # Keys
 
 $job_tech_keywords = %w(developer engineer it software programmer)
+$student_keywords = %w(student intern)
 $keys = {
 	:created => 'created',
 	:job_title => 'job_title',
@@ -130,6 +131,21 @@ def print_programmed_in_tech(table)
 	divider()
 end
 
+def print_students(table)
+	jobs = table.get_values($keys[:job_title])
+	count = 0
+	jobs.each do |job|
+		overlap = job.downcase.split(' ') & $student_keywords
+
+		if overlap.size > 0
+			count = count + 1
+		end
+	end
+
+	puts "Students are %d of %d (%2.2f%%)" % [count, table.size, count*100.0/table.size]
+	divider()
+end
+
 
 def print_dates(table)
 	date_range_format =  "From %s to %s (%d days)"
@@ -154,4 +170,4 @@ table.print_stat($keys[:programmed])
 print_programmed_in_tech(table)
 
 
-
+print_students(table)
