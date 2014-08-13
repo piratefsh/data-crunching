@@ -132,14 +132,14 @@ end
 
 
 def print_dates(table)
-	date_range_format =  "From %s to %s"
+	date_range_format =  "From %s to %s (%d days)"
 	dates = table.get_values($keys[:created]).sort
 
 	start_date = Date.parse(dates.first)
 	end_date = Date.parse(dates.last)
 
 	date_format = '%d/%m/%Y'
-	puts date_range_format % [start_date.strftime(date_format), end_date.strftime(date_format)]
+	puts date_range_format % [start_date.strftime(date_format), end_date.strftime(date_format), end_date - start_date]
 end
 
 divider()
