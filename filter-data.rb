@@ -42,5 +42,5 @@ puts "Total female and beginner applicants: %d (%2.2f%%)" % [target_total, targe
 
 puts "Why they want to attend Rails Girls:\n--------------"
 
-target.each {|t| puts "%s-----------\n" % wrap(t[$keys[:why_attend]] ||= 'n/a', 100)}
+target.each {|t| puts "Job: %s\n%s-----------\n" % wrap(t[$keys[:job_title]] ||= 'n/a', t[$keys[:why_attend]] ||= 'n/a', 100)}
 puts
