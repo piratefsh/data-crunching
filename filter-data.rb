@@ -35,12 +35,12 @@ print_programmed_in_tech(table)
 
 print_students(table)
 
-#puts 'Companies: ' + table.get_values($keys[:company]).uniq.to_s
+puts 'Companies: ' + table.get_values($keys[:company]).uniq.to_s
 target= (beginner & female)
 target_total = target.size
 puts "Total female and beginner applicants: %d (%2.2f%%)" % [target_total, target_total * 100.0 / table.size]
 
-puts "Why they want to attend Rails Girls:\n--------------"
+# puts "Why they want to attend Rails Girls:\n--------------"
 
-target.each {|t| puts "Job: %s\n%s-----------\n" % [t[$keys[:job_title]] ||= 'n/a', wrap(t[$keys[:why_attend]] ||= 'n/a', 100)]}
-puts
+# target.each {|t| puts "Job: %s\n%s-----------\n" % [t[$keys[:job_title]] ||= 'n/a', wrap(t[$keys[:why_attend]] ||= 'n/a', 100)]}
+# puts
