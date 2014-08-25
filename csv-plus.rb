@@ -74,7 +74,7 @@ class CSV::Table
 		end
 
 		format = "%10d to %d" 
-
+		vals = vals - ['0']
 		puts key 
 		puts format % [vals.min, vals.max]
 
