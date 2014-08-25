@@ -40,6 +40,13 @@ target= (beginner & female)
 target_total = target.size
 puts "Total female and beginner applicants: %d (%2.2f%%)" % [target_total, target_total * 100.0 / table.size]
 
+CSV.open('target_applicants.csv', 'wb') do |csv|
+	csv << table.to_a[0]
+	target.each do |row|
+		csv << row
+	end
+end
+
 # puts "Why they want to attend Rails Girls:\n--------------"
 
 # target.each {|t| puts "Job: %s\n%s-----------\n" % [t[$keys[:job_title]] ||= 'n/a', wrap(t[$keys[:why_attend]] ||= 'n/a', 100)]}

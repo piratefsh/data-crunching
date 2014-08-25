@@ -10,6 +10,20 @@ class CSV::Table
 		end
 		rows
 	end
+	def get_rows_with_conditions(pairs)
+	 	rows = [];
+		self.each do |row|
+			push = true
+			pairs.each do |key, value|
+				if row[key] != value 
+					push = false
+				end
+			end
+
+			rows.push(row) if push
+		end
+		rows
+	end
 
 	def get_values(key)
 
